@@ -2,10 +2,10 @@ package edu.unc.mi.testing;
 
 import java.util.List;
 
-public class PermissionsManager {
+public class UserManager {
     private final User user;
 
-    public PermissionsManager(User user) {
+    public UserManager(User user) {
         this.user = user;
     }
 

@@ -14,14 +14,14 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PermissionsManagerTest {
+class UserManagerTest {
     @Mock
     private User user;
-    private PermissionsManager pm;
+    private UserManager um;
     @BeforeEach
     void setUp() {
         user = mock(User.class);
-        pm = new PermissionsManager(user);
+        um = new UserManager(user);
     }
 
     @Test
@@ -32,7 +32,7 @@ class PermissionsManagerTest {
         when(user.getRole()).thenReturn("admin");
         when(user.getUsername()).thenReturn("Juanma");
 
-        Integer result = pm.assignPermission();
+        Integer result = um.assignPermission();
 
         verify(user, times(1)).getRole();
         Assertions.assertEquals(expected, result);
@@ -42,8 +42,8 @@ class PermissionsManagerTest {
     @DisplayName("GIVEN a null user WHEN assignPermission() THEN returns -1")
     public void assignPermissions2() {
         Integer expected = -1;
-        pm = new PermissionsManager(null);
-        Integer result = pm.assignPermission();
+        um = new UserManager(null);
+        Integer result = um.assignPermission();
 
         verify(user, never()).getRole();
         Assertions.assertEquals(expected, result);
@@ -56,7 +56,7 @@ class PermissionsManagerTest {
 
         when(user.getRole()).thenReturn("employee");
 
-        Integer result = pm.assignPermission();
+        Integer result = um.assignPermission();
         Assertions.assertEquals(expected, result);
     }
 
@@ -69,7 +69,7 @@ class PermissionsManagerTest {
 
         when(user.getAllPostsContainingWord("Java")).thenReturn(filteredPosts);
 
-        Assertions.assertFalse(pm.isThereAnyWordInPosts("Java"));
+        Assertions.assertFalse(um.isThereAnyWordInPosts("Java"));
         verify(user, times(1)).getAllPostsContainingWord("Java");
     }
 
@@ -77,7 +77,7 @@ class PermissionsManagerTest {
     @DisplayName("GIVEN a null string WHEN getAllPostsContainingWord() THEN return false")
     void getAllPostsContainingWord2() {
         verify(user, never()).getAllPostsContainingWord(null);
-        Assertions.assertFalse(pm.isThereAnyWordInPosts(null));
+        Assertions.assertFalse(um.isThereAnyWordInPosts(null));
     }
 
     @Test
@@ -89,7 +89,7 @@ class PermissionsManagerTest {
 
         when(user.getAllPostsContainingWord("software")).thenReturn(filteredPosts);
 
-        Assertions.assertTrue(pm.isThereAnyWordInPosts("software"));
+        Assertions.assertTrue(um.isThereAnyWordInPosts("software"));
         verify(user, times(1)).getAllPostsContainingWord("software");
     }
 }
